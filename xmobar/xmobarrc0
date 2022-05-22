@@ -1,0 +1,39 @@
+Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
+                           , "xft:Mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true"
+                           , "xft:FontAwesome:pixelsize=13"
+                           ]
+       , bgColor = "#282c34"
+       , fgColor = "#ff6c6b"
+       , position = Static { xpos = 0 , ypos = 0, width = 3440, height = 24 }
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , iconRoot = "/home/dt/.xmonad/xpm/"  -- default: "."
+       , commands = [ 
+                      -- Time and date
+                      Run Date "<fn=1>\xf133</fn> %b %d %Y (%H:%M)" "date" 50
+                      -- Network up and down
+                    , Run Network "enp38s0" ["-t", "<fn=1>\xf0aa</fn> <rx>kb  <fn=1>\xf0ab</fn> <tx>kb"] 20
+                      -- Cpu usage in percent
+                    , Run Cpu ["-t", "<fn=1>\xf108</fn> cpu: (<total>%)","-H","50","--high","red"] 20
+                    , Run Com "/bin/bash" ["-c","sensors|grep Tctl|cut -d '+' -f2 | cut -d '.' -f1"] "tcpu" 50
+                    , Run Com "nvidia-settings" ["-t","-q","[gpu:0]/GPUCoreTemp"] "rtx2060" 10
+                    , Run Com "/bin/bash" ["-c","nvidia-settings -t -q '[gpu:0]/GPUUtilization' | cut -d ',' -f1 | cut -d '=' -f2"] "pgt2060" 10
+                      -- Ram used number and percent
+                    , Run Memory ["-t", "<fn=1>\xf233</fn> mem: <used>M (<usedratio>%)"] 20
+                      -- Disk space free
+                    , Run DiskU [("/", "<fn=1>\xf0c7</fn> hdd: <free> free")] [] 60
+                      -- Runs a standard shell command 'uname -r' to get kernel version
+                    , Run Com "uname" ["-r"] "" 3600
+                      -- Prints out the left side items such as workspaces, layout, etc.
+                      -- The workspaces are 'clickable' in my configs.
+                    ,Run Weather "KSJC" ["-t","<station>: <tempF>F","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+                    , Run Com "/home/bryan/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 10
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %UnsafeStdinReader% }{ <fc=#666666><fn=2>|</fn> </fc><fc=#b3afc2><fn=1></fn>  %uname% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#ecbe7b> %cpu% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#EDCDC2> cpu temp: %tcpu% </fc> <fc=#666666> <fn=2>|</fn></fc> <fc=#0048BA> gpu: (%pgt2060%)</fc> <fc=#666666> <fn=2>|</fn></fc> <fc=#ACE1AF> gpu temp: %rtx2060%</fc> <fc=#666666> <fn=2>|</fn></fc> <fc=#ff6c6b> %memory% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#51afef> %disku% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#98be65> %enp38s0% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#800080> %KSJC% </fc><fc=#666666> <fn=2>|</fn></fc> <fc=#46d9ff> %date%  <fn=2>|</fn></fc> <fn=2>%trayerpad%</fn>"
+       }
