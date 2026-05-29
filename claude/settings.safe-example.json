@@ -1,0 +1,10 @@
+{
+  "omcPortableSafeMode": true,
+  "hooks": {},
+  "statusLine": null,
+  "notes": [
+    "OMC hooks are disabled by default for claude-safe.",
+    "No MCP servers are registered by this safe example.",
+    "Copy or rename this file only if claude-safe permits project settings."
+  ]
+}

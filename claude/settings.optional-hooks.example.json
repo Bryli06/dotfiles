@@ -1,0 +1,18 @@
+{
+  "_warning": "Optional OMC hook example only. Do not copy this to settings.json unless claude-safe policy explicitly permits Node hooks and writes to the configured state directory.",
+  "_defaultBundleBehavior": "The generated settings.safe-example.json intentionally registers no hooks and no MCP servers.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /allowed/path/to/omc/scripts/run.cjs /allowed/path/to/omc/scripts/keyword-detector.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
